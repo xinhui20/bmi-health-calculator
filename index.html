@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Free BMI calculator with metric and imperial units, healthy weight range, food guidance, hydration estimate, waist risk check, and simple habit trackers."
+    />
+    <meta
+      name="keywords"
+      content="BMI calculator, body mass index, healthy weight, BMI chart, weight calculator, hydration calculator, waist circumference"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="BMI Health Calculator" />
+    <meta
+      property="og:description"
+      content="Calculate your BMI, view your healthy weight range, and get practical food, movement, and habit tips."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1200&q=80" />
+    <title>BMI Health Calculator | Free Body Mass Index Tool</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="page-shell">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Free Health Tool</p>
+          <h1>BMI Health Calculator</h1>
+          <p class="lede">
+            Enter your height and weight to calculate your BMI, understand your result, and get practical next steps.
+          </p>
+        </div>
+
+        <form class="calculator" id="bmiForm">
+          <div class="unit-toggle" aria-label="Choose unit system">
+            <button class="unit-option active" type="button" data-unit="metric">cm / kg</button>
+            <button class="unit-option" type="button" data-unit="imperial">ft + in / lb</button>
+          </div>
+
+          <div class="field-grid">
+            <label id="heightMetricField">
+              <span>Height</span>
+              <div class="input-row">
+                <input id="height" type="number" min="50" max="260" step="0.1" placeholder="e.g. 170" required />
+                <strong>cm</strong>
+              </div>
+            </label>
+
+            <div class="height-imperial hidden" id="heightImperialField">
+              <label>
+                <span>Height</span>
+                <div class="input-row">
+                  <input id="heightFeet" type="number" min="1" max="8" step="1" placeholder="5" />
+                  <strong>ft</strong>
+                </div>
+              </label>
+              <label>
+                <span>&nbsp;</span>
+                <div class="input-row">
+                  <input id="heightInches" type="number" min="0" max="11.9" step="0.1" placeholder="7" />
+                  <strong>in</strong>
+                </div>
+              </label>
+            </div>
+
+            <label>
+              <span>Weight</span>
+              <div class="input-row">
+                <input id="weight" type="number" min="10" max="400" step="0.1" placeholder="e.g. 65" required />
+                <strong id="weightUnit">kg</strong>
+              </div>
+            </label>
+
+            <div class="profile-grid">
+              <label>
+                <span>Age</span>
+                <div class="input-row">
+                  <input id="age" type="number" min="18" max="120" step="1" placeholder="Optional" />
+                  <strong>yrs</strong>
+                </div>
+              </label>
+
+              <label>
+                <span>Gender</span>
+                <select id="sex">
+                  <option value="">Optional</option>
+                  <option value="female">Female</option>
+                  <option value="male">Male</option>
+                  <option value="other">Other / Prefer not to say</option>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <button type="submit">Calculate BMI</button>
+          <p class="form-note">
+            Age and gender do not change the adult BMI formula. They help explain when BMI should be interpreted with extra care.
+          </p>
+        </form>
+      </section>
+
+      <section class="result-panel" aria-live="polite">
+        <div class="result-card">
+          <p class="label">Your BMI</p>
+          <strong id="bmiValue">--</strong>
+          <span id="bmiCategory">Waiting for input</span>
+          <div class="bmi-scale" aria-hidden="true">
+            <div class="scale-track">
+              <span class="segment underweight"></span>
+              <span class="segment normal"></span>
+              <span class="segment overweight"></span>
+              <span class="segment obese"></span>
+              <span class="scale-marker" id="scaleMarker"></span>
+            </div>
+            <div class="scale-labels">
+              <span>18.5</span>
+              <span>25</span>
+              <span>30</span>
+            </div>
+          </div>
+        </div>
+        <div class="habit-card">
+          <span>Today&apos;s Health Tip</span>
+          <p id="dailyTip">Enter your height and weight to get a tip that matches your BMI result.</p>
+        </div>
+      </section>
+
+      <section class="quick-stats">
+        <article>
+          <span>Your Healthy Weight Range</span>
+          <strong id="healthyRange">--</strong>
+          <p>Estimated from the WHO adult BMI normal range of 18.5 - 24.9.</p>
+        </article>
+        <article>
+          <span>7-Day Mini Goal</span>
+          <strong id="weeklyGoal">Calculate BMI first</strong>
+          <p id="weeklyGoalDetail">Your result will unlock a small goal that is easier to follow.</p>
+        </article>
+      </section>
+
+      <section class="interactive-section" id="tools">
+        <div class="section-heading">
+          <p class="eyebrow dark">Interactive Tools</p>
+          <h2>Turn advice into something you can do today</h2>
+          <p>
+            These trackers are saved only in your browser. No account is required.
+          </p>
+        </div>
+
+        <div class="interactive-grid">
+          <article class="tool-card daily-card">
+            <h3>Daily Health Checklist</h3>
+            <div class="checklist" id="dailyChecklist">
+              <label><input type="checkbox" value="water" /> Drink enough water</label>
+              <label><input type="checkbox" value="walk" /> Walk for 20 minutes</label>
+              <label><input type="checkbox" value="vegetables" /> Eat a serving of vegetables</label>
+              <label><input type="checkbox" value="no-sugary-drink" /> Skip sugary drinks</label>
+              <label><input type="checkbox" value="sleep" /> Sleep 7 hours</label>
+            </div>
+            <div class="progress-line">
+              <span id="dailyProgressText">Completed 0/5 today</span>
+              <div><span id="dailyProgressBar"></span></div>
+            </div>
+          </article>
+
+          <article class="tool-card weekly-card">
+            <h3>7-Day Goal Tracker</h3>
+            <p id="weeklyTrackerTitle">Calculate your BMI to receive a 7-day goal.</p>
+            <div class="day-tracker" id="dayTracker"></div>
+            <button class="secondary-button" type="button" id="resetWeekly">Reset 7-day tracker</button>
+          </article>
+
+          <article class="tool-card water-card">
+            <h3>Hydration Estimator</h3>
+            <p>
+              Estimate a daily water target from your current weight. Adjust for heat, exercise, medical conditions, and professional advice.
+            </p>
+            <button class="secondary-button" type="button" id="calculateWater">Estimate water target</button>
+            <strong id="waterResult">--</strong>
+          </article>
+
+          <article class="tool-card waist-card">
+            <h3>Waist Risk Check</h3>
+            <label>
+              <span>Waist</span>
+              <div class="input-row">
+                <input id="waistInput" type="number" min="20" max="250" step="0.1" placeholder="e.g. 80" />
+                <strong id="waistUnit">cm</strong>
+              </div>
+            </label>
+            <button class="secondary-button" type="button" id="checkWaist">Check waist reference</button>
+            <p id="waistResult">Choose gender and enter waist size to see a reference note.</p>
+          </article>
+
+          <article class="tool-card history-card">
+            <div class="history-header">
+              <h3>BMI History</h3>
+              <button class="icon-button" type="button" id="clearHistory" aria-label="Clear history">Clear</button>
+            </div>
+            <ul class="history-list" id="historyList">
+              <li>Your latest 5 BMI results will appear here.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="food-guide">
+        <div class="food-photo">
+          <img
+            id="foodImage"
+            src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1000&q=80"
+            alt="Balanced healthy meal"
+          />
+        </div>
+        <div class="food-content">
+          <p class="eyebrow dark">Food Guidance</p>
+          <h2 id="foodGuideTitle">Calculate your BMI to get food suggestions</h2>
+          <p id="foodGuideIntro">
+            This section will list foods to prioritize and foods to keep moderate based on your BMI category.
+          </p>
+          <div class="food-columns">
+            <div>
+              <h3>Prioritize More Often</h3>
+              <ul class="advice-list" id="eatMoreList">
+                <li>Vegetables, fruits, whole grains, protein foods, and healthy fats are a strong foundation.</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Keep Moderate</h3>
+              <ul class="advice-list warning-list" id="limitList">
+                <li>Sugary drinks, fried foods, high-sugar snacks, and salty processed foods should not become daily habits.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="insights">
+        <article>
+          <h2>Result Meaning</h2>
+          <p id="bmiAdvice">Enter your details to see a practical explanation of your result.</p>
+        </article>
+
+        <article>
+          <h2>Food Direction</h2>
+          <p id="foodAdvice">Your result will unlock simple food guidance for your BMI category.</p>
+        </article>
+
+        <article>
+          <h2>How to Maintain</h2>
+          <p id="maintainAdvice">Healthy changes are most useful when they can be repeated long term.</p>
+        </article>
+
+        <article>
+          <h2>Action Checklist</h2>
+          <ul class="advice-list" id="actionList">
+            <li>Calculate your BMI to get more specific next steps.</li>
+          </ul>
+        </article>
+
+        <article>
+          <h2>What to Watch</h2>
+          <ul class="advice-list warning-list" id="watchList">
+            <li>BMI is only a reference. Waist size, body fat, activity level, and health history also matter.</li>
+          </ul>
+        </article>
+
+        <article>
+          <h2>BMI Categories</h2>
+          <div class="range-list">
+            <div><span>Underweight</span><strong>&lt; 18.5</strong></div>
+            <div><span>Normal</span><strong>18.5 - 24.9</strong></div>
+            <div><span>Overweight</span><strong>25 - 29.9</strong></div>
+            <div><span>Obesity</span><strong>&ge; 30</strong></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="learn-section" id="about">
+        <div class="section-heading">
+          <p class="eyebrow dark">Health Basics</p>
+          <h2>Make your BMI result more useful</h2>
+          <p>
+            BMI is a quick screening tool. Real health also depends on food quality, movement, sleep, waist size, and long-term habits.
+          </p>
+        </div>
+
+        <div class="image-grid">
+          <article class="info-card">
+            <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=900&q=80" alt="Balanced meal plate" />
+            <div>
+              <span class="tag green">Food</span>
+              <h3>A half-plate of vegetables can help</h3>
+              <p>A simple plate method is half vegetables, one quarter protein, and one quarter carbohydrates.</p>
+            </div>
+          </article>
+
+          <article class="info-card">
+            <img src="https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&w=900&q=80" alt="Outdoor running exercise" />
+            <div>
+              <span class="tag blue">Movement</span>
+              <h3>You do not need to start extreme</h3>
+              <p>Walking more and adding 2 to 3 strength sessions per week is often more sustainable than intense short-term plans.</p>
+            </div>
+          </article>
+
+          <article class="info-card">
+            <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=80" alt="Fresh vegetables and healthy ingredients" />
+            <div>
+              <span class="tag orange">Habits</span>
+              <h3>Weight management is built from repeated choices</h3>
+              <p>Less sugary drink intake, regular meals, and stable sleep can slowly improve your health direction.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="facts-section">
+        <div class="fact">
+          <strong>BMI does not measure muscle</strong>
+          <p>People who train often may have a higher BMI without having high body fat, so waist size and activity level also matter.</p>
+        </div>
+        <div class="fact">
+          <strong>Waist size adds context</strong>
+          <p>Abdominal fat is more closely linked with metabolic health. Measuring your waist monthly can show useful trends.</p>
+        </div>
+        <div class="fact">
+          <strong>Slow changes are easier to keep</strong>
+          <p>Walking more, reducing sugary drinks, and improving sleep are usually more sustainable than extreme dieting.</p>
+        </div>
+      </section>
+
+      <section class="science-section">
+        <div class="section-heading">
+          <p class="eyebrow dark">More Context</p>
+          <h2>What else matters beyond BMI?</h2>
+          <p>
+            Health is not one number. BMI is a starting point; trends, waist size, eating patterns, movement, and sleep matter too.
+          </p>
+        </div>
+
+        <div class="science-grid">
+          <article>
+            <span class="number-badge">01</span>
+            <h3>Trends matter more than one weigh-in</h3>
+            <p>Water, salt, exercise, and sleep affect daily weight. Weekly tracking over 4 to 8 weeks is more useful.</p>
+          </article>
+
+          <article>
+            <span class="number-badge">02</span>
+            <h3>Waist size can fill BMI gaps</h3>
+            <p>BMI does not show fat distribution. Higher waist size may suggest more abdominal fat and higher metabolic risk.</p>
+          </article>
+
+          <article>
+            <span class="number-badge">03</span>
+            <h3>Protein and fiber affect fullness</h3>
+            <p>Eggs, fish, tofu, beans, low-sugar dairy, vegetables, and whole grains can help meals feel more stable.</p>
+          </article>
+
+          <article>
+            <span class="number-badge">04</span>
+            <h3>Exercise is more than calorie burning</h3>
+            <p>Walking, cycling, and strength training support heart health, muscle, and blood sugar management.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="disclaimer" id="disclaimer">
+        <h2>Important Disclaimer</h2>
+        <p>
+          This website provides BMI, healthy weight range, food, hydration, waist, and movement information for general education only. It is not a medical diagnosis, treatment plan, or personalized medical advice.
+        </p>
+        <p>
+          Adult BMI standards should not be used alone for children, teenagers, pregnant people, professional athletes, people with high muscle mass, or people with medical conditions or medications that affect weight. If you have ongoing weight change, chronic illness, eating disorder risk, pregnancy, chest discomfort, shortness of breath, dizziness, pain, or other symptoms, speak with a doctor, registered dietitian, or qualified health professional.
+        </p>
+      </section>
+
+      <section class="disclaimer" id="privacy">
+        <h2>Privacy Note</h2>
+        <p>
+          This calculator runs in your browser. Checklist progress, 7-day tracking, and BMI history are stored locally on your device using browser storage. They are not sent to a server by this static website.
+        </p>
+      </section>
+
+      <footer class="site-footer">
+        <strong>BMI Health Calculator</strong>
+        <nav aria-label="Footer links">
+          <a href="#about">About</a>
+          <a href="#privacy">Privacy</a>
+          <a href="#disclaimer">Disclaimer</a>
+        </nav>
+      </footer>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
